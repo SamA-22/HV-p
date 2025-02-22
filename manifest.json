@@ -18,5 +18,11 @@
     "content_scripts": [{
         "matches": ["<all_urls>"],
         "css":["style_sheet.css"],
-        "html":["main.html"]}]
+        "js":["main.js"]}],
+    
+    "web_accessible_resources":[
+    {
+        "resources": ["hasbulla.png"],
+        "matches": ["<all_urls>"]
+    }]
 }
