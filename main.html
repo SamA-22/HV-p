@@ -1,0 +1,16 @@
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <script>
+            console.log(imgSrc);
+            var images = page.NativeWebObject.Find("src", "*", "img");; 
+            var srcList = [];
+            for(var i = 0; i < images.length; i++) {
+                srcList.push(images[i].src);
+                console.log("test")
+            }
+        </script>
+    </body>
+</html>

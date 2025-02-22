@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "hasbulla",
+    "description": "image changer for all images appearing on chrome tab",
+    "version": "1.0",
+    "icons": {
+        "16": "hasbulla.png",
+        "48":"hasbulla.png",
+        "128": "hasbulla.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "hasbulla.png",
+            "48":"hasbulla.png",
+            "128": "hasbulla.png"
+        }
+    },
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "css":["style_sheet.css"],
+        "html":["main.html"]}]
+}
