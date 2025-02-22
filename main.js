@@ -1,32 +1,46 @@
 const myImageUrl = chrome.runtime.getURL('hasbulla.png');
 
 function updateImages() {
-    const images = document.querySelectorAll('img');
-    const observer = new IntersectionObserver((entires) =>
-        {
-            entires.forEach(entry => {
-                if (entry.isIntersecting){
-                    const image = entry.target;
-                    image.src = myImageUrl;
-                    observer.unobserve(image);
-                }
-            });
-        });
-    document.querySelectorAll('img').forEach(image => {
-        observer.observe(image)
+  // Create an IntersectionObserver to replace images as soon as they come into view.
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const image = entry.target;
+        image.src = myImageUrl;
+        imageObserver.unobserve(image);
+      }
     });
-        
+  });
+  
+  // Observe each <img> element on the page.
+  document.querySelectorAll('img').forEach(image => {
+    imageObserver.observe(image);
+  });
 }
 
+// Ensure updateImages runs once the DOM is ready.
+if (document.body) {
+  updateImages();
+} else {
+  document.addEventListener('DOMContentLoaded', updateImages);
+}
 
-updateImages();
-
-const observer = new MutationObserver(mutations => {
+// Set up a MutationObserver to detect new images added to the DOM.
+const mutationObserver = new MutationObserver(mutations => {
   mutations.forEach(mutation => {
-    if (mutation.addedNodes.length) {
-      updateImages();
-    }
+    mutation.addedNodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        updateImages();
+      }
+    });
   });
 });
 
-observer.observe(document.body, { childList: true, subtree: true });
+// Wait until the DOM is ready before observing document.body.
+if (document.body) {
+  mutationObserver.observe(document.body, { childList: true, subtree: true });
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+  });
+}
