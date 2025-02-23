@@ -1,22 +1,35 @@
 {
     "manifest_version": 3,
     "name": "hasbulla",
-    "description": "image changer for all images appearing on chrome tab",
+    "description": "Image changer for all images appearing on a Chrome tab",
     "version": "1.0",
     "icons": {
-        "16": "hasbulla.png",
-        "48":"hasbulla.png",
-        "128": "hasbulla.png"
+      "16": "hasbulla.png",
+      "48": "hasbulla.png",
+      "128": "hasbulla.png"
     },
     "action": {
-        "default_icon": {
-            "16": "hasbulla.png",
-            "48":"hasbulla.png",
-            "128": "hasbulla.png"
-        }
+      "default_icon": {
+        "16": "hasbulla.png",
+        "48": "hasbulla.png",
+        "128": "hasbulla.png"
+      }
     },
+
+    "permissions": ["declarativeNetRequest", "activeTab"],
+    "host_permissions": ["<all_urls>"],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    },
+
+    "web_accessible_resources": [{
+      "resources": ["hasbulla.png"],
+      "matches": ["<all_urls>"]
+    }],
     "content_scripts": [{
-        "matches": ["<all_urls>"],
-        "css":["style_sheet.css"],
-        "html":["main.html"]}]
-}
+      "matches": ["<all_urls>"],
+      "js": ["dist/bundle.js"],
+      "run_at": "document_start"
+    }]
+  }
+  
