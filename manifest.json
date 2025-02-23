@@ -15,24 +15,20 @@
         "128": "hasbulla.png"
       }
     },
-    "permissions": [
-      "declarativeNetRequest"
-    ],
-    "declarative_net_request": {
-      "rule_resources": [{
-        "id": "replace-images",
-        "enabled": true,
-        "path": "rules.json"
-      }]
+
+    "permissions": ["declarativeNetRequest", "activeTab"],
+    "host_permissions": ["<all_urls>"],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
     },
+
     "web_accessible_resources": [{
       "resources": ["hasbulla.png"],
       "matches": ["<all_urls>"]
     }],
     "content_scripts": [{
       "matches": ["<all_urls>"],
-      "css": ["style_sheet.css"],
-      "js": ["main.js"],
+      "js": ["dist/bundle.js"],
       "run_at": "document_start"
     }]
   }
